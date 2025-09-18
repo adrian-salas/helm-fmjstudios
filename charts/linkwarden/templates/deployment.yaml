@@ -73,7 +73,7 @@ spec:
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
-                  name: {{ default .Values.linkwarden.database.existingSecret (include "linkwarden.secrets.db" .) }}
+                  name: {{ if .Values.linkwarden.database.existingSecret }}{{ .Values.linkwarden.database.existingSecret }}{{ else }}{{ include "linkwarden.secrets.db" . }}{{ end }}
                   key: uri
             {{- end }}
             {{/* Authentication settings */}}
